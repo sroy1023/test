@@ -1,0 +1,108 @@
+# Default values for metric_server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: k8s.gcr.io/metrics-server/metrics-server
+  tag: v0.4.4
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+rbac:
+  ## Specifies whether RBAC rules should be created
+  ##
+  create: true
+
+## Pods Service Account
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  ## Specifies whether a ServiceAccount should be created
+  ##
+  create: true
+  ## The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the common.names.fullname template
+  # name:
+  ## Automount API credentials for a service account.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  ##
+  automountServiceAccountToken: true
+
+
+## API service parameters
+##
+apiService:
+  ## Specifies whether the v1beta1.metrics.k8s.io API service should be created
+  ## This is still necessary up to at least k8s version >= 1.21, but depends on vendors and cloud providers.
+  ##
+  create: true
+
+## Specify the secure port where metrics-server will be running
+##
+securePort: 8443
+
+# Specifies if metrics-server should be started in hostNetwork mode.
+#
+# You would require this enabled if you use alternate overlay networking for pods and
+# API server unable to communicate with metrics-server. As an example, this is required
+# if you use Weave network on EKS
+hostNetwork: true
+
+extraArgs:
+       
+kubelet-insecure-tls: true
+##   kubelet-preferred-address-types: InternalIP
+  # The name of the service account to use.
+  # If not set and create is true, a n
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
