@@ -3,11 +3,11 @@ entries:
   my_server:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-05-24T15:01:28.6600496Z"
+    created: "2021-05-24T15:38:23.557416262Z"
     description: A Helm chart for Kubernetes
     digest: 70c83f4637e092c9c8e0df3a0e45e7c8c07c84e90105bf0158694f1d57c22cff
     name: my_server
     urls:
     - my_server-0.1.0.tgz
     version: 0.1.0
-generated: "2021-05-24T15:01:28.659513527Z"
+generated: "2021-05-24T15:38:23.550159245Z"
